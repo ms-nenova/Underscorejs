@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Studnets Functions</title>
+    <script src="Scripts/class.js"></script>
+    <script src="Scripts/underscore.js"> </script>
+</head>
+<body>
+    <script>
+        console.log("\n-------------------   1   -------------------");
+        var Student = Class.create({
+            init: function (fname, lname, age, highMark) {
+                this.fname = fname,
+                this.lname = lname,
+                this.age = age;
+                this.highMark = highMark
+            },
+            toString: function () {
+                return this.fname + " " + this.lname
+            }
+        });
+
+        var students = [
+        new Student("Anatali", "ZKarpo", 21, 5),
+        new Student("Iv4o", "Nadarenkov", 21, 6),
+        new Student("Stavri", "Ludikov", 19, 4),
+        new Student("Hari", "Jorov", 22, 3),
+        new Student("Mirko", "CroCop", 25, 5),
+        new Student("Milko", "AKalaidjiev", 17, 4)];
+
+
+
+        var studentsFirstNameBeforeLast = _.filter(students, function (st) {
+            return st.lname > st.fname;
+        }).reverse();
+
+        console.log("Students who's first name is before last namein reversed order : \n")
+        _.each(studentsFirstNameBeforeLast, function (st) {
+            console.log(st.toString());
+        });
+
+        console.log("\n-------------------   2   -------------------");
+
+        console.log("\nPeople who's age is between 18 and 24 : \n")
+        var studentsBetweenEighteenAndTwentyFour = _.filter(students, function (st) {
+            return st.age >= 18 && st.age <= 24;
+        });
+        _.each(studentsBetweenEighteenAndTwentyFour, function (st) {
+            console.log(st.toString() + " " + st.age);
+        });
+
+        console.log("\n-------------------   3   -------------------");
+        var studenthighMark = _.max(students, function (st) {
+            return st.highMark;
+        });
+        console.log("\nStudent with highMark is : \n" + studenthighMark.toString() +
+            " " + studenthighMark.highMark);
+
+        console.log("\n-------------------   4   -------------------");
+
+        var Animal = Class.create({
+            init: function (spicie, type, legs) {
+                this.spicie = spicie,
+                this.legs = legs,
+                this.type = type
+            },
+            toString: function () {
+                return "type " + this.type + " legs " + this.legs
+            }
+        });
+
+
+        var animals = [
+        new Animal("mammal", "Human", 2),
+        new Animal("mammal", "Dog", 4),
+        new Animal("insect", "Centipede", 100),
+        new Animal("insect", "Spider", 8),
+        new Animal("bird", "Pelican", 2),
+        new Animal("bird", "Dragon", 4)]
+
+        var orderedAnimalsBySpicie = _.groupBy(animals, 'spicie');
+
+        for (var prop in orderedAnimalsBySpicie) {
+            var sortedSpiciesByLegs = _.sortBy(orderedAnimalsBySpicie[prop], function (a) {
+                return a.legs;
+            });
+            orderedAnimalsBySpicie[prop] = sortedSpiciesByLegs;
+        }
+
+        console.log("\n");
+        _.each(orderedAnimalsBySpicie, function (a) {
+            console.log(a[0].spicie + "\n");
+            for (var i in a) {
+                console.log(a[i].toString());
+            }
+            console.log("\n");
+        });
+
+        console.log("\n-------------------   5   -------------------");
+        var sumLegs = _.reduce(animals, function (memo, a) { return memo + a.legs; }, 0);
+        console.log("\n The sum of legs of all animals is " + sumLegs);
+
+        console.log("\n-------------------   6   -------------------");
+
+        var Book = Class.create({
+            init: function (author, book) {
+                this.author = author,
+                this.book = book;
+            },
+        });
+        var books = [
+         new Book("Natradim Hodja", "misli i razmisi na nastadin"),
+         new Book("Opra", "Biography of oprah winfrey"),
+         new Book("Natradim Hodja", "Priklu4eniqta na nastradim"),
+         new Book("Hitur Petur", "Hitur Petur i Priqteli"),
+         new Book("Hitur Petur", "Probvai me"),
+         new Book("Natradim Hodja", "Kak da izlujem hitur Petur")];
+         
+
+        var mostPopularAuthor =_.countBy(books, function (b) {
+            return b.author;
+        });
+        
+        var valueOfMostPopularAuthor = _.max(mostPopularAuthor, function (a) {
+            return a;
+        });
+
+
+        for (var prop in mostPopularAuthor) {
+            if (mostPopularAuthor[prop] == valueOfMostPopularAuthor)
+            {
+                    console.log("\nMost popular author is " + prop + " with " + valueOfMostPopularAuthor + " books")
+            }
+        }
+       
+        var People = Class.create({
+            init: function (fname, lname) {
+                this.fname = fname,
+                this.lname = lname
+            },
+            toString: function () {
+                return "First "
+            }
+        });
+
+        console.log("\n-------------------   7   -------------------");
+        var peoples = [
+        new People("Ivan", "Zar4ev"),
+        new People("Zorka", "Mi4ova"),
+        new People("Ivan", "Ganchev"),
+        new People("Ivan", "Vulov"),
+        new People("Zorka", "Purvanova"),
+        new People("Husein", "Ivanov"),
+        new People("Gan4o", "Zar4ev")];
+
+        var mostPopularFirstname = _.countBy(peoples, function (p) {
+            return p.fname;
+        });
+
+        var valueOfMostPopularFirstname = _.max(mostPopularFirstname, function (c) {
+            return c;
+        });
+
+
+        for (var prop in mostPopularFirstname) {
+            if (mostPopularFirstname[prop] == valueOfMostPopularFirstname) {
+                console.log("\nMost common first name is " + prop +
+                    " with " + valueOfMostPopularFirstname + " peoples who own it")
+            }
+        }
+
+        var mostPopularLastName = _.countBy(peoples, function (p) {
+            return p.lname;
+        });
+
+        var valueOfMostCommonLastName = _.max(mostPopularLastName, function (c) {
+            return c;
+        });
+
+
+        for (var prop in mostPopularLastName) {
+            if (mostPopularLastName[prop] == valueOfMostCommonLastName) {
+                console.log("\nMost common last name is " + prop +
+                    " with " + valueOfMostCommonLastName + " peoples who own it")
+            }
+        }
+
+    </script>
+</body>
+</html>
